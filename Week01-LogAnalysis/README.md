@@ -1,4 +1,5 @@
 # Week 1 – Log Analysis 101 with Windows Event Viewer
+# Completed - June 20, 2025
 
 ## Objective
 Analyze Windows event logs to detect signs of unauthorized access, suspicious file changes, or brute-force login attempts.
