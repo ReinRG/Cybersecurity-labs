@@ -8,45 +8,50 @@ Analyze Windows event logs to detect signs of unauthorized access, suspicious fi
 ## Tools Used
 - Windows 10 Event Viewer
 - Built-in Windows audit logging
-- Optional: Wazuh Agent for log forwarding
 
 ---
 
 ## Steps Performed
 
 1. Enabled audit policies in Local Security Policy.
-2. Opened Event Viewer and filtered by:
+2. Opened Event Viewer and filtered for:
    - Event ID 4624 (Successful login)
    - Event ID 4625 (Failed login)
    - Event ID 4663 (File access)
-3. Identified suspicious login attempts from IP `xxx.xxx.xxx.xxx`.
-4. Correlated timestamps with unusual activity.
+3. Simulated failed login attempts to generate Event ID 4625 logs.
+4. Observed timestamps to understand the sequence of login events.
 
 ---
 
 ## Findings
 
-| Time (UTC) | Event ID | Description | Notes |
-|------------|----------|-------------|-------|
-| 12:30 PM   | 4625     | Failed login | 15 attempts in under 1 minute |
-| 12:34 PM   | 4624     | Successful login | From new user account |
-| 12:36 PM   | 4663     | File accessed | `confidential.docx` opened |
+| Time (UTC)   | Event ID | Description      | Notes                                          |
+|--------------|----------|------------------|------------------------------------------------|
+| 10:23:35 PM  | 4625     | Failed login      | Incorrect password entered by the user         |
+| 10:23:39 PM  | 4624     | Successful login  | User logged in successfully after failure      |
 
 ---
 
 ## Screenshots
 
-*Include screenshots of your Event Viewer showing filtered logs, timestamps, or alerts.*
+- `1-security-policy-logon.jpg`: Audit policy enabled for logon events
+- `2-successful-login-sample-4624.jpg`: Sample of a successful login (Event ID 4624)
+- `3-failed-login-sample-4625.jpg`: Sample of a failed login (Event ID 4625)
+- `4-eventviewer-filter.jpg`: Filtered Security logs in Event Viewer
+- `5-event-details-4625.jpg`: Login attempt analysis from Event Viewer
 
 ---
 
 ## Lessons Learned
-- Windows Event Viewer can detect brute-force attempts through event ID patterns.
-- Correlating login and file access events helps identify suspicious activity.
-- Documentation is critical — timestamp everything!
+
+- Learned how to enable Windows audit logging for login and file events.
+- Gained hands-on experience using Event Viewer to analyze login activity.
+- Understood how Event IDs correlate with user behavior and security incidents.
+- Recognized the importance of screenshots and documentation in SOC reporting.
 
 ---
 
 ## Next Steps
-- Set up centralized logging with Wazuh or a SIEM.
-- Create alert rules for rapid login attempts and access to sensitive files.
+
+- Learn how to set up centralized logging using Wazuh or a SIEM platform.
+- Practice creating alert rules for failed login attempts and access to sensitive files.
